@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_center_scale"
+        android:enabled="true"
+        android:title="@string/title_center_scale"
+        android:visible="true"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_first_scale"
+        android:enabled="true"
+        android:title="@string/title_first_scale"
+        android:visible="true"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_custom_scale"
+        android:enabled="true"
+        android:title="@string/title_custom_scale"
+        android:visible="true"
+        app:showAsAction="never" />
+</menu>
