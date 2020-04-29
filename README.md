@@ -13,7 +13,12 @@
 
 ## 样式演示
 
-
+| 1 | 2 | 3 |
+| :----------------------------------------------------------: | :--: | :--: |
+| <img src="/previews/glm01_ItemAnimations.gif" alt="动画支持" style="zoom:45%;" /> |<img src="/previews/glm02_Infinite.gif" alt="无限循环" style="zoom:45%;" />|<img src="/previews/glm03_centerScale.gif" alt="中间项缩放" style="zoom:45%;" />|
+| 动画支持                                                     |无限循环|中间项缩放|
+| <img src="/previews/glm04_firstScale.gif" alt="第一项缩放" style="zoom:45%;" /> | <img src="/previews/glm05_customScale.gif" alt="自定义缩放" style="zoom:45%;" /> |      |
+| 第一项缩放 | 自定义缩放 |      |
 
 ## DEMO
 
