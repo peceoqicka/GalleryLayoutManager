@@ -6,10 +6,10 @@
 > GalleryLayoutManager是为轮播控件设计的支持无限循环滑动的画廊布局管理器，支持ItemDecoration定制装饰样式。
 
 ## 特点
-* 支持无限循环
-* 支持仿ViewPager选中效果（需要设置PagerSnapHelper）
-* 支持按比例缩放Item
-* 支持透明度变化（待添加）
+- [x] 支持无限循环
+- [x] 支持仿ViewPager选中效果（设置默认的SnapHelper即可，详情请参考下方说明）
+- [x] 支持按比例缩放Item
+- [ ] 支持透明度变化（开发中）
 
 ## 样式演示
 
