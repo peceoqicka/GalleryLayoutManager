@@ -29,7 +29,7 @@
 
 ## DEMO
 
-clone this project，or download [demo-apk](https://github.com/peceoqicka/GalleryLayoutManager/blob/master/app/release/app-release.apk), [demo-apk-androidx](https://github.com/peceoqicka/GalleryLayoutManager/blob/master/appx/release/app-release.apk)
+clone this project，or download [demo-apk](https://github.com/peceoqicka/GalleryLayoutManager/blob/master/app/release/app-release.apk), [demo-apk-androidx](https://github.com/peceoqicka/GalleryLayoutManager/blob/master/appx/release/appx-release.apk)
 
 ## How to use
 
