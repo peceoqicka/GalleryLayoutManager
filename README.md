@@ -5,7 +5,10 @@
 
 > GalleryLayoutManager是为轮播控件设计的支持无限循环滑动的画廊布局管理器，支持ItemDecoration定制装饰样式。
 
+[English](/README-EN.md)
+
 ## 特点
+- [x] 支持Android X
 - [x] 支持无限循环
 - [x] 支持仿ViewPager选中效果（设置默认的SnapHelper即可，详情请参考下方说明）
 - [x] 支持按比例缩放Item
@@ -29,6 +32,10 @@
 在**app**的**build.gradle**中添加依赖：
 ```groovy
 implementation 'com.peceoqicka:gallerylayoutmanager:1.0.0'
+```
+**Android X**版本（仅对包名做更改，不能与旧版本兼容）：
+```groovy
+implementation 'com.peceoqicka:gallerylayoutmanagerx:1.0.0'
 ```
 Java调用即可
 ```java

@@ -22,11 +22,11 @@
 
             <ImageView
                 android:id="@+id/iv_item_first_scale_image"
+                imageUrl="@{model.imageUrl}"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
-                app:imageUrl="@{model.imageUrl}"
                 app:layout_constraintBottom_toTopOf="@+id/tv_item_first_scale_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

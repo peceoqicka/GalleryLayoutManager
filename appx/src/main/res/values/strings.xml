@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">GalleryLayoutManager</string>
+    <string name="insert_item">插入数据</string>
+    <string name="delete_item">删除数据</string>
+    <string name="target_item_position">目标数据位置：%1$d</string>
+    <string name="first_item">位置0</string>
+    <string name="second_item">位置1</string>
+    <string name="last_item">ItemCount - 1</string>
+    <string name="middle_item">中间位置</string>
+    <string name="scroll_to_item">滚动到目标位置</string>
+    <string name="smooth_scroll_to_item">平滑滚动到目标位置</string>
+    <string name="to_ad3">轮播样式3</string>
+    <string name="temp_selection">当前选中了%1$d</string>
+    <string name="temp_click">你已点击%1$s</string>
+    <string name="title_center_scale">中间项缩放</string>
+    <string name="title_first_scale">第一项缩放</string>
+    <string name="title_custom_scale">自定义缩放</string>
+</resources>

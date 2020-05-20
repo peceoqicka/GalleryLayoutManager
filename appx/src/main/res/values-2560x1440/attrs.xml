@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="StrokeIndicatorView">
+        <attr name="siv_normalColor" format="reference|color" />
+        <attr name="siv_selectedColor" format="reference|color" />
+        <attr name="siv_strokeWidth" format="dimension" />
+        <attr name="siv_strokeHeight" format="dimension" />
+        <attr name="siv_strokeSelectedWidth" format="dimension" />
+        <attr name="siv_strokeSpace" format="dimension" />
+    </declare-styleable>
+</resources>

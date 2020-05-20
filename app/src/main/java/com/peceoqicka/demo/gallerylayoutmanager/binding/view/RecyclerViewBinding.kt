@@ -4,14 +4,6 @@ import android.databinding.BindingAdapter
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SnapHelper
 
-/**
- * <pre>
- *      author  :   peceoqicka
- *      time    :   2018/8/17
- *      version :   1.0
- *      desc    :
- * </pre>
- */
 @BindingAdapter("app:adapter")
 fun <VH : RecyclerView.ViewHolder> setRecyclerViewAdapter(
     recyclerView: RecyclerView,
