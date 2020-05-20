@@ -14,6 +14,12 @@
 
 ## Preview
 
+
+
+**Sorry, I forgot to translate the preview images, you can download demo to run  yourself, I add English translation in the demo**
+
+
+
 | 1 | 2 | 3 |
 | :----------------------------------------------------------: | :--: | :--: |
 | <img src="/previews/glm01_ItemAnimations.gif" alt="animation support" style="zoom:45%;" /> |<img src="/previews/glm02_Infinite.gif" alt="infinite scrolling" style="zoom:45%;" />|<img src="/previews/glm03_centerScale.gif" alt="center item scale" style="zoom:45%;" />|
@@ -23,7 +29,7 @@
 
 ## DEMO
 
-clone this project，or download [demo-apk](https://github.com/peceoqicka/GalleryLayoutManager/blob/master/app/release/app-release.apk)
+clone this project，or download [demo-apk](https://github.com/peceoqicka/GalleryLayoutManager/blob/master/app/release/app-release.apk), [demo-apk-androidx](https://github.com/peceoqicka/GalleryLayoutManager/blob/master/appx/release/app-release.apk)
 
 ## How to use
 
@@ -66,7 +72,6 @@ new GalleryLayoutManager.Builder()
 	.build();
 ```
 When first-layout, the 0th item will be moved to the center of visible area.(Only works in infinity-mode)
-在第一次布局的时候，将原本的第0项Item移动到可视区域正中间，仅在**无限循环**模式下有效。
 
 ### Transformation position
 

@@ -4,7 +4,7 @@ import android.databinding.BindingAdapter
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SnapHelper
 
-@BindingAdapter("app:adapter")
+@BindingAdapter("adapter")
 fun <VH : RecyclerView.ViewHolder> setRecyclerViewAdapter(
     recyclerView: RecyclerView,
     adapter: RecyclerView.Adapter<VH>?
@@ -14,24 +14,24 @@ fun <VH : RecyclerView.ViewHolder> setRecyclerViewAdapter(
     }
 }
 
-@BindingAdapter("app:layoutManager")
+@BindingAdapter("layoutManager")
 fun setLayoutManager(recyclerView: RecyclerView, layoutManager: RecyclerView.LayoutManager) {
     recyclerView.layoutManager = layoutManager
 }
 
-@BindingAdapter("app:itemDecoration")
+@BindingAdapter("itemDecoration")
 fun addItemDecoration(recyclerView: RecyclerView, itemDecoration: RecyclerView.ItemDecoration?) {
     if (itemDecoration != null) {
         recyclerView.addItemDecoration(itemDecoration)
     }
 }
 
-@BindingAdapter("app:itemAnimator")
+@BindingAdapter("itemAnimator")
 fun setItemAnimator(recyclerView: RecyclerView, itemAnimator: RecyclerView.ItemAnimator) {
     recyclerView.itemAnimator = itemAnimator
 }
 
-@BindingAdapter("app:snapHelper")
+@BindingAdapter("snapHelper")
 fun RecyclerView.bindSnapHelper(snapHelper: SnapHelper) {
     snapHelper.attachToRecyclerView(this)
 }

@@ -20,8 +20,8 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/px_640"
             android:background="#d9d9d9"
-            app:adapter="@{model.adapter}"
-            app:layoutManager="@{model.layoutManager}"
+            adapter="@{model.adapter}"
+            layoutManager="@{model.layoutManager}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -12,7 +12,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.peceoqicka.demo.gallerylayoutmanager.util.TintUtil
 import java.io.File
 
-@BindingAdapter("app:imageRes")
+@BindingAdapter("imageRes")
 fun setImageRes(imageView: ImageView, res: Int) {
     if (res == 0) {
         imageView.visibility = View.GONE
@@ -21,7 +21,7 @@ fun setImageRes(imageView: ImageView, res: Int) {
     }
 }
 
-@BindingAdapter("app:imageRes", "app:drawableTint")
+@BindingAdapter("imageRes", "drawableTint")
 fun setImageResWithTint(imageView: ImageView, res: Int, colorStateList: ColorStateList?) {
     val drawable = ContextCompat.getDrawable(imageView.context, res)
     if (colorStateList != null && drawable != null) {
@@ -29,28 +29,28 @@ fun setImageResWithTint(imageView: ImageView, res: Int, colorStateList: ColorSta
     }
 }
 
-@BindingAdapter("app:imageDrawable")
+@BindingAdapter("imageDrawable")
 fun setImageDrawable(imageView: ImageView, drawable: Drawable?) {
     drawable?.let {
         imageView.setImageDrawable(drawable)
     }
 }
 
-@BindingAdapter("app:imageDrawable", "app:drawableTint")
+@BindingAdapter("imageDrawable", "drawableTint")
 fun setImageDrawableWithTint(imageView: ImageView, drawable: Drawable?, colorStateList: ColorStateList?) {
     if (drawable != null && colorStateList != null) {
         imageView.setImageDrawable(TintUtil.tintDrawable(drawable, colorStateList))
     }
 }
 
-@BindingAdapter("app:imageDrawable", "app:shouldFillSrc")
+@BindingAdapter("imageDrawable", "shouldFillSrc")
 fun setImageDrawable(imageView: ImageView, drawable: Drawable?, shouldFillSrc: Boolean) {
     if (shouldFillSrc) {
         imageView.setImageDrawable(drawable)
     }
 }
 
-@BindingAdapter("app:imageUrl")
+@BindingAdapter("imageUrl")
 fun setImageUrl(imageView: ImageView, imageUrl: String?) {
     if ("" == imageUrl)
         imageView.visibility = View.GONE
@@ -59,7 +59,7 @@ fun setImageUrl(imageView: ImageView, imageUrl: String?) {
     }
 }
 
-@BindingAdapter("app:imageUrl", "app:imageDefault", "app:imageShape")
+@BindingAdapter("imageUrl", "imageDefault", "imageShape")
 fun setImageURLWithShape(imageView: ImageView, url: String, defaultDrawable: Drawable, shape: Int) {
     Glide.with(imageView.context).load(if (url.isNotEmpty()) url else defaultDrawable)
             .apply(when (shape) {
@@ -69,7 +69,7 @@ fun setImageURLWithShape(imageView: ImageView, url: String, defaultDrawable: Dra
             .into(imageView)
 }
 
-@BindingAdapter("app:imageLocation")
+@BindingAdapter("imageLocation")
 fun setImageLocation(imageView: ImageView, imageLocation: String) {
     if (TextUtils.isEmpty(imageLocation)) {
         imageView.visibility = View.GONE
