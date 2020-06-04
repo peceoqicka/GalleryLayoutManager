@@ -1,6 +1,6 @@
 # GalleryLayoutManager
 
-![Bintray](https://img.shields.io/badge/JCenter-v1.0.0-blue.svg)
+![Bintray](https://img.shields.io/badge/JCenter-v1.0.1-blue)
 ![MinSdk](https://img.shields.io/badge/MinSdk-19-green)
 
 > GalleryLayoutManager, which can scroll infinitely, is designed for advertisement view. You can use **ItemDecorations** to style items.

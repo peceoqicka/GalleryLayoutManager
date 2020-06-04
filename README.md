@@ -1,9 +1,9 @@
 # GalleryLayoutManager - 画廊布局管理器
 
-![Bintray](https://img.shields.io/badge/JCenter-v1.0.0-blue.svg)
+![Bintray](https://img.shields.io/badge/JCenter-v1.0.1-blue)
 ![MinSdk](https://img.shields.io/badge/MinSdk-19-green)
 
-> GalleryLayoutManager是为轮播控件设计的支持无限循环滑动的画廊布局管理器，支持ItemDecoration定制装饰样式。
+> GalleryLayoutManager是为轮播控件设计的支持无限循环滑动的画廊布局管理器，支持ItemDecoration定制装饰样式。	
 
 [English](/README-EN.md)
 
