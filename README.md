@@ -14,6 +14,10 @@
 - [x] 支持按比例缩放Item
 - [ ] 支持透明度变化（开发中）
 
+## 更新日志
+
+[更新日志](/docs/update.md)
+
 ## 样式演示
 
 | 1 | 2 | 3 |
@@ -31,11 +35,18 @@
 
 在**app**的**build.gradle**中添加依赖：
 ```groovy
-implementation 'com.peceoqicka:gallerylayoutmanager:1.0.0'
+implementation 'com.peceoqicka:gallerylayoutmanager:1.0.1'
 ```
 **Android X**版本（仅对包名做更改，不能与旧版本兼容）：
 ```groovy
-implementation 'com.peceoqicka:gallerylayoutmanagerx:1.0.0'
+implementation 'com.peceoqicka:gallerylayoutmanagerx:1.0.1'
+```
+**你需要添加的额外的依赖库：**
+```groovy
+//旧版本
+implementation 'com.android.support:design:28.0.0'
+//AndroidX
+implementation 'com.google.android.material:material:1.1.0'
 ```
 Java调用即可
 ```java

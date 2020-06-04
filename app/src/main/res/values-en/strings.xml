@@ -7,9 +7,9 @@
     <string name="first_item">position 0</string>
     <string name="second_item">position 1</string>
     <string name="last_item">ItemCount - 1</string>
-    <string name="middle_item">middle item position</string>
-    <string name="scroll_to_item">scroll to target position</string>
-    <string name="smooth_scroll_to_item">smooth scroll to target position</string>
+    <string name="middle_item">middle</string>
+    <string name="scroll_to_item">scroll to</string>
+    <string name="smooth_scroll_to_item">smooth scroll to</string>
     <string name="to_ad3">ad view type 3</string>
     <string name="temp_selection">current selection: %1$d</string>
     <string name="temp_click">your clicked : %1$s</string>

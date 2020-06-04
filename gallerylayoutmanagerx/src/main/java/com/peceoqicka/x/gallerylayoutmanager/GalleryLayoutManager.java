@@ -43,7 +43,6 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
     private AnchorInfo mAnchorInfo = new AnchorInfo();
 
     private int mTransformPosition;
-    private boolean mCanScrollHorizontally = true;
     private boolean mIsInfinityModeEnabled = true;
     private boolean mIsInfinityModeOpened;
     private boolean mShouldLayoutCenter;
@@ -142,7 +141,7 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
 
     @Override
     public boolean canScrollHorizontally() {
-        return mCanScrollHorizontally;
+        return true;
     }
 
     @Override
@@ -167,7 +166,6 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
     public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
         //System.out.println("-------------onLayoutChildren[PreLayout : " + state.isPreLayout() + "]----------------");
         if (state.getItemCount() == 0) {
-            mCanScrollHorizontally = false;
             removeAndRecycleAllViews(recycler);
             return;
         }
