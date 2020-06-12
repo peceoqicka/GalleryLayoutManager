@@ -42,15 +42,11 @@ class FirstScaleActivity : AppCompatActivity() {
             R.layout.activity_first_scale
         )
         binding.model = ViewModel().apply {
-            itemDecoration = FirstScaleItemDecoration(
-                dimen(R.dimen.px_90),
-                dimen(R.dimen.px_90),
-                dimen(R.dimen.px_70)
-            )
             layoutManager =
                 if (type == 1)
                     GalleryLayoutManager.Builder()
                         .setDefaultSnapHelper()
+                        .setBasePosition(GalleryLayoutManager.BASE_POSITION_START)
                         .setTransformPosition(GalleryLayoutManager.POSITION_CUSTOMIZED)
                         .setCustomizedTransformPosition(
                             dimen(R.dimen.px_540),

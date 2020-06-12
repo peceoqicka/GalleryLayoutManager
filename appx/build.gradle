@@ -52,5 +52,6 @@ dependencies {
     implementation 'com.jaeger.statusbarutil:library:1.5.1'
 
     debugImplementation project(':gallerylayoutmanagerx')
-    releaseImplementation 'com.peceoqicka:gallerylayoutmanagerx:1.0.1'
+//    releaseImplementation project(':gallerylayoutmanagerx')
+    releaseImplementation 'com.peceoqicka:gallerylayoutmanagerx:1.0.2'
 }

@@ -1,6 +1,6 @@
 # GalleryLayoutManager - 画廊布局管理器
 
-![Bintray](https://img.shields.io/badge/JCenter-v1.0.1-blue)
+![Bintray](https://img.shields.io/badge/JCenter-v1.0.2-blue)
 ![MinSdk](https://img.shields.io/badge/MinSdk-19-green)
 
 > GalleryLayoutManager是为轮播控件设计的支持无限循环滑动的画廊布局管理器，支持ItemDecoration定制装饰样式。	
@@ -9,7 +9,8 @@
 
 ## 特点
 - [x] 支持Android X
-- [x] 支持无限循环
+- [x] 无限循环（1.0.2版本仅支持无限循环）
+- [x] 自动补充重复Item以满足无限循环
 - [x] 支持仿ViewPager选中效果（设置默认的SnapHelper即可，详情请参考下方说明）
 - [x] 支持按比例缩放Item
 - [ ] 支持透明度变化（开发中）
@@ -35,11 +36,11 @@
 
 在**app**的**build.gradle**中添加依赖：
 ```groovy
-implementation 'com.peceoqicka:gallerylayoutmanager:1.0.1'
+implementation 'com.peceoqicka:gallerylayoutmanager:1.0.2'
 ```
 **Android X**版本（仅对包名做更改，不能与旧版本兼容）：
 ```groovy
-implementation 'com.peceoqicka:gallerylayoutmanagerx:1.0.1'
+implementation 'com.peceoqicka:gallerylayoutmanagerx:1.0.2'
 ```
 **你需要添加的额外的依赖库：**
 ```groovy
@@ -52,8 +53,7 @@ Java调用即可
 ```java
 GalleryLayoutManager layoutManager = new GalleryLayoutManager.Builder()
 	.setSnapHelper(new PagerSnapHelper())
-	.setInfinityMode(true)
-	.setLayoutInCenter(true)
+	.setBasePosition(GalleryLayoutManager.BASE_POSITION_CENTER)
 	.setTransformPosition(GalleryLayoutManager.POSITION_CENTER)
 	.setCenterScale(1.2f, 1.2f)
 	.build();
@@ -66,7 +66,6 @@ mRecyclerView.setLayoutManager(layoutManager)
 
 ```java
 new GalleryLayoutManager.Builder()
-	.setInfinityMode(true)
 	.build();
 ```
 
@@ -74,11 +73,12 @@ new GalleryLayoutManager.Builder()
 
 ```java
 new GalleryLayoutManager.Builder()
-	.setInfinityMode(true)
-	.setLayoutInCenter(true)
+	.setBasePosition(GalleryLayoutManager.BASE_POSITION_CENTER)
+    //默认为BASE_POSITION_CENTER，可以不用调用
+    //选择BASE_POSIITON_START会将布局起始点设置为左边
 	.build();
 ```
-在第一次布局的时候，将原本的第0项Item移动到可视区域正中间，仅在**无限循环**模式下有效。
+在第一次布局的时候，将原本的第0项Item移动到可视区域正中间。
 
 ### 变形位置
 
@@ -113,7 +113,7 @@ new GalleryLayoutManager.Builder()
 ```java
 new GalleryLayoutManager.Builder()
 	.setDefaultSnapHelper()
-    .setOnScrollListener(new GalleryLayoutManager.OnScrollListener() {
+    .setOnScrollListener(new GalleryLayoutManager.SimpleScrollListener() {
         @Override
         public void onIdle(int snapViewPosition) {
 			//选中的Item的位置，在这里做通知Indicator改变选中位置等操作
@@ -122,16 +122,6 @@ new GalleryLayoutManager.Builder()
         @Override
         public void onScrolling(float scrollingPercentage, int fromPosition, int toPosition) {
 			//滑动的监听，从当前选中位置到下一个位置的百分比变化
-        }
-
-        @Override
-        public void onDragging() {
-
-        }
-
-        @Override
-        public void onSettling() {
-
         }
     })
 	.build();

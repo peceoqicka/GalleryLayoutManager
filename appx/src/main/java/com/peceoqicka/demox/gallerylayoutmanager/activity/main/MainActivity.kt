@@ -11,9 +11,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
+import com.peceoqicka.demox.gallerylayoutmanager.R
 import com.peceoqicka.demox.gallerylayoutmanager.activity.center.CenterScaleActivity
 import com.peceoqicka.demox.gallerylayoutmanager.activity.first.FirstScaleActivity
-import com.peceoqicka.demox.gallerylayoutmanager.R
 import com.peceoqicka.demox.gallerylayoutmanager.data.NewsModel
 import com.peceoqicka.demox.gallerylayoutmanager.databinding.ActivityMainBinding
 import com.peceoqicka.x.gallerylayoutmanager.GalleryLayoutManager
@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bindModel: ViewModel
     private lateinit var dataList: ArrayList<SquareItemViewModel>
     private lateinit var binding: ActivityMainBinding
+    private var localIndex: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,26 +41,13 @@ class MainActivity : AppCompatActivity() {
             handler = eventHandler
             layoutManager = GalleryLayoutManager.Builder()
                 .setDefaultSnapHelper()
-                .setInfinityMode(true)
-                .setLayoutInCenter(true)
+                .setExtraMargin(100)
+                .setBasePosition(GalleryLayoutManager.BASE_POSITION_CENTER)
                 .setTransformPosition(GalleryLayoutManager.POSITION_CENTER)
                 .setCenterScale(1.2f, 1.2f)
-                .setOnScrollListener(object : GalleryLayoutManager.OnScrollListener {
+                .setOnScrollListener(object : GalleryLayoutManager.SimpleScrollListener() {
                     override fun onIdle(snapViewPosition: Int) {
                         bindModel.selection = snapViewPosition
-                    }
-
-                    override fun onScrolling(
-                        scrollingPercentage: Float,
-                        fromPosition: Int,
-                        toPosition: Int
-                    ) {
-                    }
-
-                    override fun onDragging() {
-                    }
-
-                    override fun onSettling() {
                     }
                 })
                 .build()
@@ -86,7 +74,11 @@ class MainActivity : AppCompatActivity() {
             .subscribe {
                 val m = Gson().fromJson(it, NewsModel::class.java)
                 dataList = m.toItemViewModel()
+                val afterList = ArrayList<SquareItemViewModel>()
+                //afterList.addAll(dataList)
+                afterList.addAll(dataList.subList(0, 1))
                 bindModel.adapter = SquareAdapter(dataList)
+                //bindModel.adapter = SquareAdapter(afterList)
             }
     }
 
@@ -118,9 +110,11 @@ class MainActivity : AppCompatActivity() {
                 val insertData = dataList[rndDataPosition]
                 val dataCopy = SquareItemViewModel().apply {
                     this.imageUrl = insertData.imageUrl
-                    this.title = insertData.title
+                    this.title = "[${localIndex}]${insertData.title}"
+                    localIndex++
                 }
                 dataList.add(bindModel.targetDataPosition, dataCopy)
+                //println("targetDataPosition : ${bindModel.targetDataPosition}")
                 bindModel.adapter?.notifyItemInserted(bindModel.targetDataPosition)
             }
         }

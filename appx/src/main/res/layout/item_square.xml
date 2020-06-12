@@ -13,21 +13,20 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/px_50"
         app:cardCornerRadius="@dimen/px_20"
-        app:cardElevation="2dp">
+        app:cardElevation="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="@dimen/px_728"
-            android:layout_height="@dimen/px_480">
+            android:layout_width="@dimen/px_400"
+            android:layout_height="@dimen/px_380">
 
             <ImageView
                 android:id="@+id/iv_item_square_image"
+                imageUrl="@{model.imageUrl}"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
-                imageUrl="@{model.imageUrl}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

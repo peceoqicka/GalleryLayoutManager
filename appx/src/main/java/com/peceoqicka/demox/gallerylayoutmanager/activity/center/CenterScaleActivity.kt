@@ -37,8 +37,7 @@ class CenterScaleActivity : AppCompatActivity() {
         binding.model = ViewModel().apply {
             layoutManager = GalleryLayoutManager.Builder()
                 .setDefaultSnapHelper()
-                .setInfinityMode(true)
-                .setLayoutInCenter(true)
+                .setExtraMargin(80)
                 .setTransformPosition(GalleryLayoutManager.POSITION_CENTER)
                 .setCenterScale(1.2f, 1.2f)
                 .setOnScrollListener(object : GalleryLayoutManager.OnScrollListener {
@@ -89,7 +88,9 @@ class CenterScaleActivity : AppCompatActivity() {
             .subscribe {
                 val m = Gson().fromJson(it, NewsModel::class.java)
                 dataList = m.toItemViewModel()
-                bindModel.adapter = SquareAdapter(dataList)
+                var checkList = ArrayList<SquareItemViewModel>()
+                checkList.add(dataList[0])
+                bindModel.adapter = SquareAdapter(checkList)
                 //binding.sivCenterScaleIndicator.setItemCount(dataList.size)
             }
     }

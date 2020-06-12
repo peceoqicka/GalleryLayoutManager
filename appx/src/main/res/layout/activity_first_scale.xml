@@ -22,7 +22,6 @@
             android:layout_height="@dimen/px_720"
             android:background="#EEEEEE"
             adapter="@{model.adapter}"
-            itemDecoration="@{model.itemDecoration}"
             layoutManager="@{model.layoutManager}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

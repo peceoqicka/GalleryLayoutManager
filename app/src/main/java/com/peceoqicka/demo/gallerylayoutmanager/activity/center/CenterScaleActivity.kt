@@ -37,9 +37,8 @@ class CenterScaleActivity : AppCompatActivity() {
         binding.model = ViewModel().apply {
             layoutManager = GalleryLayoutManager.Builder()
                 .setDefaultSnapHelper()
-                .setInfinityMode(true)
-                .setLayoutInCenter(true)
                 .setTransformPosition(GalleryLayoutManager.POSITION_CENTER)
+                .setExtraMargin(80)
                 .setCenterScale(1.2f, 1.2f)
                 .setOnScrollListener(object : GalleryLayoutManager.OnScrollListener {
                     override fun onIdle(snapViewPosition: Int) {

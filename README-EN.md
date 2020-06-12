@@ -1,13 +1,14 @@
 # GalleryLayoutManager
 
-![Bintray](https://img.shields.io/badge/JCenter-v1.0.1-blue)
+![Bintray](https://img.shields.io/badge/JCenter-v1.0.2-blue)
 ![MinSdk](https://img.shields.io/badge/MinSdk-19-green)
 
 > GalleryLayoutManager, which can scroll infinitely, is designed for advertisement view. You can use **ItemDecorations** to style items.
 
 ## Features
 - [x] android x  compatible
-- [x] infinite scrolling
+- [x] infinite scrolling (above 1.0.2, only infinite scrolling available)
+- [x] automatically add items to ensure infinite-scrolling
 - [x] select item like how a viewpager does
 - [x] scale item
 - [ ] item's alpha change（developing...）
@@ -39,18 +40,17 @@ clone this project，or download [demo-apk](https://github.com/peceoqicka/Galler
 
 add implementations in **app**'s **build.gradle** file：
 ```groovy
-implementation 'com.peceoqicka:gallerylayoutmanager:1.0.1'
+implementation 'com.peceoqicka:gallerylayoutmanager:1.0.2'
 ```
 or **Android X** version（only package name changed, not work with legacy project）:
 ```groovy
-implementation 'com.peceoqicka:gallerylayoutmanagerx:1.0.1'
+implementation 'com.peceoqicka:gallerylayoutmanagerx:1.0.2'
 ```
 then call this in java:
 ```java
 GalleryLayoutManager layoutManager = new GalleryLayoutManager.Builder()
 	.setSnapHelper(new PagerSnapHelper())
-	.setInfinityMode(true)
-	.setLayoutInCenter(true)
+	.setBasePosition(GalleryLayoutManager.BASE_POSITION_CENTER)
 	.setTransformPosition(GalleryLayoutManager.POSITION_CENTER)
 	.setCenterScale(1.2f, 1.2f)
 	.build();
@@ -63,19 +63,21 @@ It's better to use **GalleryLayoutManager.Builder**，or use **constructors** di
 
 ```java
 new GalleryLayoutManager.Builder()
-	.setInfinityMode(true)
 	.build();
 ```
+
+**now there's only infinite-scrolling mode**
 
 ### First item layout in center
 
 ```java
 new GalleryLayoutManager.Builder()
-	.setInfinityMode(true)
-	.setLayoutInCenter(true)
+	.setBasePosition(GalleryLayoutManager.BASE_POSITION_CENTER)
+	//call setBasePosition or not, default option is this
+	//set BASE_POSITION_START alternatively
 	.build();
 ```
-When first-layout, the 0th item will be moved to the center of visible area.(Only works in infinity-mode)
+When first-layout, the 0th item will be moved to the center of visible area.
 
 ### Transformation position
 
