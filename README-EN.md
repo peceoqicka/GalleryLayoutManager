@@ -1,6 +1,6 @@
 # GalleryLayoutManager
 
-![Bintray](https://img.shields.io/badge/JCenter-v1.0.2-blue)
+![Bintray](https://img.shields.io/badge/JCenter-v1.0.4-blue)
 ![MinSdk](https://img.shields.io/badge/MinSdk-19-green)
 
 > GalleryLayoutManager, which can scroll infinitely, is designed for advertisement view. You can use **ItemDecorations** to style items.
@@ -40,11 +40,11 @@ clone this project，or download [demo-apk](https://github.com/peceoqicka/Galler
 
 add implementations in **app**'s **build.gradle** file：
 ```groovy
-implementation 'com.peceoqicka:gallerylayoutmanager:1.0.2'
+implementation 'com.peceoqicka:gallerylayoutmanager:1.0.4'
 ```
 or **Android X** version（only package name changed, not work with legacy project）:
 ```groovy
-implementation 'com.peceoqicka:gallerylayoutmanagerx:1.0.2'
+implementation 'com.peceoqicka:gallerylayoutmanagerx:1.0.4'
 ```
 then call this in java:
 ```java

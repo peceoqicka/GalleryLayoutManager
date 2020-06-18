@@ -73,12 +73,11 @@ class MainActivity : AppCompatActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 val m = Gson().fromJson(it, NewsModel::class.java)
-                dataList = m.toItemViewModel()
-                val afterList = ArrayList<SquareItemViewModel>()
-                //afterList.addAll(dataList)
-                afterList.addAll(dataList.subList(0, 1))
+                val sourceList = m.toItemViewModel()
+                dataList = ArrayList()
+                //dataList.addAll(sourceList.subList(0, 1))
+                dataList.addAll(sourceList)
                 bindModel.adapter = SquareAdapter(dataList)
-                //bindModel.adapter = SquareAdapter(afterList)
             }
     }
 

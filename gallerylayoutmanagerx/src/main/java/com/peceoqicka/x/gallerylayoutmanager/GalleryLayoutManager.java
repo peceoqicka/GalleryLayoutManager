@@ -58,7 +58,9 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
     private int mBasePosition;
     private float mCenterScaleX, mCenterScaleY;
 
+    private boolean mForceToScrollToRight = true;
     private boolean mIsItemInsufficient = false;
+    private boolean mIsNeedToFixScrollingDirection = false;
     private int mExtraMargin = 0;
     private int mBaseCenterX = 0;
     private int mCurrentPosition = 0;
@@ -73,8 +75,9 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
 
     private OnScrollListener mOnScrollListener = null;
 
-    public GalleryLayoutManager(SnapHelper snapHelper, int extraMargin, @BasePosition int basePosition, @TransformPosition int transformPosition, float[] centerScale, int[] customizedTransformPosition) {
+    public GalleryLayoutManager(SnapHelper snapHelper, boolean forceToScrollToRight, int extraMargin, @BasePosition int basePosition, @TransformPosition int transformPosition, float[] centerScale, int[] customizedTransformPosition) {
         this.mSnapHelper = snapHelper;
+        this.mForceToScrollToRight = forceToScrollToRight;
         this.mExtraMargin = extraMargin;
         this.mBasePosition = basePosition;
         this.mTransformPosition = transformPosition;
@@ -157,7 +160,7 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
         mLayoutState.mLayoutDirection = mLayoutState.mLastScrollDelta >= 0 ? LayoutState.LAYOUT_END : LayoutState.LAYOUT_START;
 
         detachAndScrapAttachedViews(recycler);
-        int startOffset = 0, endOffset = 0;
+        int startOffset, endOffset;
         int startPosition, endPosition;
         if (mAnchorInfo.mLayoutFromEnd) {
             //System.out.println("layoutFromEnd");
@@ -249,8 +252,13 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
     }
 
     private void checkIfNotEnoughToScrollInfinitely(int childCountBeforeLayout, int childCountAfterLayout, int itemCount) {
-        if (childCountBeforeLayout == 0 && childCountAfterLayout > 0 && itemCount <= 1) {
-            mIsItemInsufficient = true;
+        if (childCountBeforeLayout == 0 && childCountAfterLayout > 0) {
+            if (itemCount <= 1) {
+                mIsItemInsufficient = true;
+            }
+            if (itemCount < childCountAfterLayout) {
+                mIsNeedToFixScrollingDirection = true;
+            }
         }
     }
 
@@ -717,7 +725,7 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
         int remainingSpace = start + mLayoutState.mExtraFillSpace;
         while (remainingSpace > 0 && mLayoutState.hasMore(state)) {
             mLayoutChunkResult.reset();
-            layoutChunk(recycler, state);
+            layoutChunk(recycler);
             //System.out.println("layoutChunk -> childCount : " + getChildCount());
             if (mLayoutState.mShouldAddCenterOffset) {
                 mLayoutState.mOffset -= mLayoutChunkResult.mOffset * mLayoutState.mLayoutDirection;
@@ -745,7 +753,7 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
         return start - mLayoutState.mAvailable;
     }
 
-    private void layoutChunk(RecyclerView.Recycler recycler, RecyclerView.State state) {
+    private void layoutChunk(RecyclerView.Recycler recycler) {
         //System.out.println("layoutChunk");
         View view = mLayoutState.nextView(recycler);
 
@@ -859,12 +867,33 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
         if (childCount == 0) {
             return null;
         }
-        final View firstView = getChildAt(0);
-        if (firstView == null) return null;
-        final int firstChild = getPosition(firstView);
-        final int viewPosition = position - firstChild;
+        int rightBorder = childCount - 1;
+        int index = 0;
+        int tailIndex = childCount - 1;
+        View firstView = getChildAt(index);
+        View lastView = getChildAt(tailIndex);
+        if (firstView == null || lastView == null) return null;
+        boolean selectNextOne = mForceToScrollToRight || mIsItemInsufficient;
+        int firstChildPosition = getPosition(firstView);
+        int lastChildPosition = getPosition(lastView);
+        if (selectNextOne) {
+            while (mViewHelper.isOutOfBounds(firstView)) {
+                index++;
+                firstView = getChildAt(index);
+                if (firstView == null) continue;
+                firstChildPosition = getPosition(firstView);
+            }
+            while (mViewHelper.isOutOfBounds(lastView)) {
+                tailIndex--;
+                rightBorder--;
+                lastView = getChildAt(tailIndex);
+                if (lastView == null) continue;
+                lastChildPosition = getPosition(lastView);
+            }
+        }
+        int viewPosition = position - (selectNextOne ? lastChildPosition : firstChildPosition);
         if (viewPosition >= 0 && viewPosition < childCount) {
-            View targetView = getChildAt(viewPosition);
+            View targetView = getChildAt(selectNextOne ? (rightBorder - viewPosition) : viewPosition);
             if (targetView == null) {
                 return null;
             } else if (getPosition(targetView) == position) {
@@ -876,7 +905,6 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
 
     @Override
     public void scrollToPosition(int position) {
-        if (mIsItemInsufficient) return;
         mPendingScrollPosition = position;
         mPendingScrollOffset = Integer.MIN_VALUE;
         requestLayout();
@@ -884,7 +912,6 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
 
     @Override
     public void smoothScrollToPosition(RecyclerView recyclerView, RecyclerView.State state, int position) {
-        if (mIsItemInsufficient) return;
         GallerySmoothScroller smoothScroller = new GallerySmoothScroller(recyclerView.getContext());
         smoothScroller.setTargetPosition(position);
         startSmoothScroll(smoothScroller);
@@ -905,6 +932,9 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
         int direction = -1;
         int lastChildPosition = getPosition(lastChild);
         if (firstChildPosition > lastChildPosition && targetPosition >= firstChildPosition) {
+            direction = 1;
+        }
+        if (mIsNeedToFixScrollingDirection) {
             direction = 1;
         }
 
@@ -1113,6 +1143,7 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
          */
         int basePosition = BASE_POSITION_CENTER;
         int transformPosition = POSITION_NONE;
+        boolean forceToScrollToRight = true;
         SnapHelper snapHelper = null;
         float[] centerScale = new float[]{1, 1};
         int[] customizedTransformPosition = new int[]{0, 0, 0};
@@ -1120,6 +1151,11 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
 
         public Builder setExtraMargin(int extraMargin) {
             this.extraMargin = extraMargin;
+            return this;
+        }
+
+        public Builder setForceToScrollToRight(boolean forceToScrollToRight) {
+            this.forceToScrollToRight = forceToScrollToRight;
             return this;
         }
 
@@ -1171,7 +1207,7 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
         }
 
         public GalleryLayoutManager build() {
-            GalleryLayoutManager layoutManager = new GalleryLayoutManager(snapHelper, extraMargin, basePosition, transformPosition, centerScale, customizedTransformPosition);
+            GalleryLayoutManager layoutManager = new GalleryLayoutManager(snapHelper, forceToScrollToRight, extraMargin, basePosition, transformPosition, centerScale, customizedTransformPosition);
             layoutManager.setOnScrollListener(onScrollListener);
             return layoutManager;
         }
@@ -1249,7 +1285,7 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
     private static class GallerySnapHelper extends SnapHelper {
         private GalleryLayoutManager mLayout;
 
-        public void attachToLayoutManager(GalleryLayoutManager layoutManager) {
+        void attachToLayoutManager(GalleryLayoutManager layoutManager) {
             this.mLayout = layoutManager;
         }
 
@@ -1332,6 +1368,14 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
 
         int getCenter() {
             return mLayoutManager.getWidth() / 2;
+        }
+
+        boolean isOutOfBounds(View view) {
+            int start = getDecoratedStart(view);
+            int end = getDecoratedEnd(view);
+            if (start < 0 && end < 0) {
+                return true;
+            } else return start > mLayoutManager.getWidth() && end > mLayoutManager.getWidth();
         }
     }
 

@@ -1,6 +1,6 @@
 # GalleryLayoutManager - 画廊布局管理器
 
-![Bintray](https://img.shields.io/badge/JCenter-v1.0.2-blue)
+![Bintray](https://img.shields.io/badge/JCenter-v1.0.4-blue)
 ![MinSdk](https://img.shields.io/badge/MinSdk-19-green)
 
 > GalleryLayoutManager是为轮播控件设计的支持无限循环滑动的画廊布局管理器，支持ItemDecoration定制装饰样式。	
@@ -36,11 +36,11 @@
 
 在**app**的**build.gradle**中添加依赖：
 ```groovy
-implementation 'com.peceoqicka:gallerylayoutmanager:1.0.2'
+implementation 'com.peceoqicka:gallerylayoutmanager:1.0.4'
 ```
 **Android X**版本（仅对包名做更改，不能与旧版本兼容）：
 ```groovy
-implementation 'com.peceoqicka:gallerylayoutmanagerx:1.0.2'
+implementation 'com.peceoqicka:gallerylayoutmanagerx:1.0.4'
 ```
 **你需要添加的额外的依赖库：**
 ```groovy

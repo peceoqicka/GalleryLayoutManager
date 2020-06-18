@@ -1,5 +1,17 @@
 # Update Logs
 
+## 1.0.4
+
+### BUGs
+
+* Fix a problem when datalist has only one data, calling **smoothScrollTo** has no effect
+
+## 1.0.3
+
+### New Features
+
+* Add **Force To Scroll To Right** mode, when call smoothScrollTo method, scroll to right (default open)
+
 ## 1.0.2
 
 ### New Features

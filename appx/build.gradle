@@ -53,5 +53,5 @@ dependencies {
 
     debugImplementation project(':gallerylayoutmanagerx')
 //    releaseImplementation project(':gallerylayoutmanagerx')
-    releaseImplementation 'com.peceoqicka:gallerylayoutmanagerx:1.0.2'
+    releaseImplementation 'com.peceoqicka:gallerylayoutmanagerx:1.0.4'
 }
