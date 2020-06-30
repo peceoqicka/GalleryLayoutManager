@@ -22,4 +22,11 @@
         android:title="@string/title_custom_scale"
         android:visible="true"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_auto_scroll"
+        android:enabled="true"
+        android:title="@string/title_auto_scroll"
+        android:visible="true"
+        app:showAsAction="never" />
 </menu>

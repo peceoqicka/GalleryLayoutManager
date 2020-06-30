@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.peceoqicka.demox.gallerylayoutmanager.activity.scroll.AutoScrollActivity.ViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activity.scroll.AutoScrollActivity">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_activity_auto_scroll"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/px_39"
+            android:layout_marginTop="@dimen/px_50"
+            android:layout_marginEnd="@dimen/px_39"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_activity_main_list"
+                adapter="@{model.adapter}"
+                layoutManager="@{model.layoutManager}"
+                smoothScrollTo="@{model.scrollPosition}"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_380" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_activity_main_selection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/px_20"
+            android:layout_marginTop="@dimen/px_50"
+            android:text="@{@string/temp_selection(model.selection)}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cv_activity_auto_scroll" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

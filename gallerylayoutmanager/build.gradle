@@ -35,7 +35,7 @@ publish {
     repoName = rootProject.repoName         // Binary上的刚才新建的仓库名（Repository）
     groupId = rootProject.groupId             // 依赖名compile 'x:y:z'中的包名x
     artifactId = 'gallerylayoutmanager'    // 依赖名compile 'x:y:z'中的项目名y
-    publishVersion = '1.0.4'                // 依赖名compile 'x:y:z'中的版本号z
+    publishVersion = '1.0.6'                // 依赖名compile 'x:y:z'中的版本号z
     desc = rootProject.desc
     website = rootProject.website           // VCS地址，即填写项目上传的Github地址
 }

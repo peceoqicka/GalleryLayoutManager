@@ -1,4 +1,15 @@
 # Update Logs
+## 1.0.6
+
+### BUGs
+
+* Fix a problem that scroll to left when data length is 2, and each ItemView's width can fill up visible area.
+
+## 1.0.5
+
+### New Features
+
+* Add **Force-To-Scroll-To-Right-Mode**, when call **smoothScrollTo**, it will be forced to scroll to right, even if the target  view is in the left of the visible area. This mode is defaultly open
 
 ## 1.0.4
 

@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".activity.main.MainActivity"
             android:screenOrientation="portrait">
@@ -26,6 +27,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.first.FirstScaleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.scroll.AutoScrollActivity"
             android:screenOrientation="portrait" />
     </application>
 

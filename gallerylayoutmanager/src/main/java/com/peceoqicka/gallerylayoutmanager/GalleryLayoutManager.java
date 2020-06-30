@@ -124,6 +124,10 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
         return mViewHelper;
     }
 
+    private boolean isForceToScrollToRight() {
+        return this.mForceToScrollToRight;
+    }
+
     @Override
     public RecyclerView.LayoutParams generateDefaultLayoutParams() {
         return new RecyclerView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -635,6 +639,7 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
         }
         final int scrolled = absDx > consumed ? consumed * mLayoutState.mLayoutDirection : dx;
         offsetChildrenHorizontal(-scrolled);
+        //System.out.println("offsetChildrenHorizontal(" + (-scrolled) + ") , childCount : [" + getChildCount() + "]");
         calculateScrollingPercentage(dx, state);
         applyScaleForLayoutViews();
         mLayoutState.mLastScrollDelta = dx;
@@ -890,10 +895,12 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
                 lastChildPosition = getPosition(lastView);
             }
         }
-        int viewPosition = position - (selectNextOne ? lastChildPosition : firstChildPosition);
+        int basePosition = selectNextOne ? lastChildPosition : firstChildPosition;
+        int viewPosition = position - basePosition;
         if (viewPosition >= 0 && viewPosition < childCount) {
-            View targetView = getChildAt(selectNextOne ? (rightBorder - viewPosition) : viewPosition);
-            if (targetView == null) {
+            int childIndex = selectNextOne ? (rightBorder - viewPosition) : viewPosition;
+            View targetView = getChildAt(childIndex);
+            if (targetView == null || getPosition(targetView) > basePosition) {
                 return null;
             } else if (getPosition(targetView) == position) {
                 return targetView;
@@ -933,7 +940,7 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
         if (firstChildPosition > lastChildPosition && targetPosition >= firstChildPosition) {
             direction = 1;
         }
-        if (mIsNeedToFixScrollingDirection) {
+        if (mIsNeedToFixScrollingDirection || mForceToScrollToRight) {
             direction = 1;
         }
 
@@ -1228,15 +1235,15 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
             GalleryLayoutManager layout = (GalleryLayoutManager) layoutManager;
             final int left = layout.getViewHelper().getDecoratedStart(view);
             final int right = layout.getViewHelper().getDecoratedEnd(view);
-            final int start = layoutManager.getPaddingLeft();
-            final int end = layoutManager.getWidth() - layoutManager.getPaddingRight();
+            final int start = layout.getPaddingLeft();
+            final int end = layout.getWidth() - layout.getPaddingRight();
             final int center = layout.getViewHelper().getCenter();
             final boolean shouldOffsetToCenter = layout.getBasePosition() == GalleryLayoutManager.BASE_POSITION_CENTER;
-            return calculateDtToFit(left, right, center, start, end, snapPreference, shouldOffsetToCenter);
+            return calculateDtToFit(left, right, center, start, end, snapPreference, shouldOffsetToCenter, layout.isForceToScrollToRight());
         }
 
         private int calculateDtToFit(int viewStart, int viewEnd, int boxCenter, int boxStart, int boxEnd, int
-                snapPreference, boolean shouldOffsetToCenter) {
+                snapPreference, boolean shouldOffsetToCenter, boolean forceToScrollRight) {
             final int viewWidthHalf = (viewEnd - viewStart) / 2;
 
             switch (snapPreference) {

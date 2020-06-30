@@ -28,3 +28,8 @@ fun RecyclerView.bindItemAnimator(itemAnimator: RecyclerView.ItemAnimator) {
 fun RecyclerView.bindSnapHelper(snapHelper: SnapHelper) {
     snapHelper.attachToRecyclerView(this)
 }
+
+@BindingAdapter("smoothScrollTo")
+fun RecyclerView.smoothScrollTo(position: Int) {
+    this.smoothScrollToPosition(position)
+}

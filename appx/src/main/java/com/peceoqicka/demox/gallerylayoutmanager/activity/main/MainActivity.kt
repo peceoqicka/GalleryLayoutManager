@@ -14,12 +14,14 @@ import com.google.gson.Gson
 import com.peceoqicka.demox.gallerylayoutmanager.R
 import com.peceoqicka.demox.gallerylayoutmanager.activity.center.CenterScaleActivity
 import com.peceoqicka.demox.gallerylayoutmanager.activity.first.FirstScaleActivity
+import com.peceoqicka.demox.gallerylayoutmanager.activity.scroll.AutoScrollActivity
 import com.peceoqicka.demox.gallerylayoutmanager.data.NewsModel
 import com.peceoqicka.demox.gallerylayoutmanager.databinding.ActivityMainBinding
 import com.peceoqicka.x.gallerylayoutmanager.GalleryLayoutManager
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_main.view.*
 import org.jetbrains.anko.startActivity
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -43,8 +45,6 @@ class MainActivity : AppCompatActivity() {
                 .setDefaultSnapHelper()
                 .setExtraMargin(100)
                 .setBasePosition(GalleryLayoutManager.BASE_POSITION_CENTER)
-                .setTransformPosition(GalleryLayoutManager.POSITION_CENTER)
-                .setCenterScale(1.2f, 1.2f)
                 .setOnScrollListener(object : GalleryLayoutManager.SimpleScrollListener() {
                     override fun onIdle(snapViewPosition: Int) {
                         bindModel.selection = snapViewPosition
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
                 val m = Gson().fromJson(it, NewsModel::class.java)
                 val sourceList = m.toItemViewModel()
                 dataList = ArrayList()
-                //dataList.addAll(sourceList.subList(0, 1))
+                //dataList.addAll(sourceList.subList(0, 2))
                 dataList.addAll(sourceList)
                 bindModel.adapter = SquareAdapter(dataList)
             }
@@ -97,6 +97,9 @@ class MainActivity : AppCompatActivity() {
             R.id.action_custom_scale -> {
                 //自定义缩放
                 startActivity<FirstScaleActivity>(FirstScaleActivity.EXTRA_TYPE to 1)
+            }
+            R.id.action_auto_scroll -> {
+                startActivity<AutoScrollActivity>()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -175,6 +178,12 @@ class MainActivity : AppCompatActivity() {
             get
             set(value) {
                 field = value;notifyPropertyChanged(BR.targetDataPosition)
+            }
+        var scrollPosition: Int = 0
+            @Bindable
+            get
+            set(value) {
+                field = value;notifyPropertyChanged(BR.scrollPosition)
             }
 
         interface EventHandler {

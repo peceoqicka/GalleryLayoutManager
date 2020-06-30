@@ -16,4 +16,5 @@
     <string name="title_center_scale">center item scale</string>
     <string name="title_first_scale">first item scale</string>
     <string name="title_custom_scale">custom scale position</string>
+    <string name="title_auto_scroll">auto scroll</string>
 </resources>

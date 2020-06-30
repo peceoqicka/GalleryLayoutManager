@@ -18,7 +18,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_main_list"
             android:layout_width="0dp"
-            android:layout_height="@dimen/px_640"
+            android:layout_height="@dimen/px_540"
             android:background="#d9d9d9"
             adapter="@{model.adapter}"
             layoutManager="@{model.layoutManager}"
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/px_20"
-            android:layout_marginTop="@dimen/px_20"
+            android:layout_marginTop="@dimen/px_50"
             android:text="@{@string/temp_selection(model.selection)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rv_main_list" />

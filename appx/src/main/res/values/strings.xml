@@ -15,4 +15,5 @@
     <string name="title_center_scale">中间项缩放</string>
     <string name="title_first_scale">第一项缩放</string>
     <string name="title_custom_scale">自定义缩放</string>
+    <string name="title_auto_scroll">自动滚动</string>
 </resources>
