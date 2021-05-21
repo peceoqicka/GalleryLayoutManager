@@ -44,6 +44,5 @@ dependencies {
     implementation "com.squareup.moshi:moshi-kotlin:1.9.1"
 
     debugImplementation project(':library')
-    releaseImplementation project(':library')
-    //releaseImplementation 'com.peceoqicka:gallerylayoutmanager:1.0.6'
+    releaseImplementation "com.github.peceoqicka:GalleryLayoutManager:1.0.0"
 }

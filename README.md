@@ -1,6 +1,6 @@
 # GalleryLayoutManager - 画廊布局管理器
 
-![Bintray](https://img.shields.io/badge/JCenter-v1.0.6-blue)
+![JitPack](https://img.shields.io/badge/JitPack-v1.0.0-blue)
 ![MinSdk](https://img.shields.io/badge/MinSdk-19-green)
 
 > GalleryLayoutManager是为轮播控件设计的支持无限循环滑动的画廊布局管理器，支持ItemDecoration定制装饰样式。	
@@ -39,7 +39,7 @@ allprojects {
 
 在**app**的**build.gradle**中添加依赖：
 ```groovy
-implementation 'com.peceoqicka:gallerylayoutmanager:1.0.0'
+implementation 'com.github.peceoqicka:GalleryLayoutManager:1.0.0'
 ```
 
 **你需要添加的额外的依赖库：**
@@ -86,7 +86,7 @@ snapHelper = LinearSnapHelper()
 ### 滑动回调
 
 ```kotlin
-GalleryLayoutManager.builder{
+GalleryLayoutManager.create {
     onScrollListener = object: OnScrollListener() {
         @Override
         public void onIdle(int snapViewPosition) {
