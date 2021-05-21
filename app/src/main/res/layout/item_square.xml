@@ -18,17 +18,18 @@
         app:cardElevation="2dp">
 
         <android.support.constraint.ConstraintLayout
-            android:layout_width="@dimen/px_728"
-            android:layout_height="@dimen/px_480">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/iv_item_square_image"
-                android:layout_width="0dp"
+                imageUrl="@{model.imageUrl}"
+                android:layout_width="200dp"
                 android:layout_height="0dp"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
-                imageUrl="@{model.imageUrl}"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="3:2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

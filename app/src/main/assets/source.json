@@ -1,28 +1,26 @@
-{
-  "data": [
-    {
-      "imageUrl": "https://p4.img.cctvpic.com/photoworkspace/2020/04/27/2020042710234762869.jpg",
-      "title": "“天空之镜”青海茶卡盐湖景区开园迎客"
-    },
-    {
-      "imageUrl": "https://p4.img.cctvpic.com/photoworkspace/2020/04/27/2020042710221337879.jpg",
-      "title": "德国餐饮业者连日抗议 要求明确“解封”时间"
-    },
-    {
-      "imageUrl": "https://p3.img.cctvpic.com/photoworkspace/2020/04/27/2020042710181977386.jpg",
-      "title": "南宁天空现美丽日晕景观"
-    },
-    {
-      "imageUrl": "https://p4.img.cctvpic.com/photoworkspace/2020/04/27/2020042710260745694.jpg",
-      "title": "云上丹寨城"
-    },
-    {
-      "imageUrl": "https://p4.img.cctvpic.com/photoworkspace/2020/04/26/2020042615294931210.jpg",
-      "title": "辽宁营口：候鸟迁徙造就“鸟浪”景观"
-    },
-    {
-      "imageUrl": "https://p2.img.cctvpic.com/photoworkspace/2020/04/26/2020042615234184335.jpg",
-      "title": "美国加州：微生物在海滩上演蓝色“灯光秀”"
-    }
-  ]
-}
+[
+  {
+    "imageUrl": "https://p4.img.cctvpic.com/photoworkspace/2020/04/27/2020042710234762869.jpg",
+    "title": "“天空之镜”青海茶卡盐湖景区开园迎客"
+  },
+  {
+    "imageUrl": "https://p4.img.cctvpic.com/photoworkspace/2020/04/27/2020042710221337879.jpg",
+    "title": "德国餐饮业者连日抗议 要求明确“解封”时间"
+  },
+  {
+    "imageUrl": "https://p3.img.cctvpic.com/photoworkspace/2020/04/27/2020042710181977386.jpg",
+    "title": "南宁天空现美丽日晕景观"
+  },
+  {
+    "imageUrl": "https://p4.img.cctvpic.com/photoworkspace/2020/04/27/2020042710260745694.jpg",
+    "title": "云上丹寨城"
+  },
+  {
+    "imageUrl": "https://p4.img.cctvpic.com/photoworkspace/2020/04/26/2020042615294931210.jpg",
+    "title": "辽宁营口：候鸟迁徙造就“鸟浪”景观"
+  },
+  {
+    "imageUrl": "https://p2.img.cctvpic.com/photoworkspace/2020/04/26/2020042615234184335.jpg",
+    "title": "美国加州：微生物在海滩上演蓝色“灯光秀”"
+  }
+]

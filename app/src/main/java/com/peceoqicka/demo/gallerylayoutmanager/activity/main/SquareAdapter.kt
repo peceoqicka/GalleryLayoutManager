@@ -4,7 +4,7 @@ import com.peceoqicka.demo.gallerylayoutmanager.R
 import com.peceoqicka.demo.gallerylayoutmanager.binding.adapter.UniversalBindingAdapter
 import com.peceoqicka.demo.gallerylayoutmanager.databinding.ItemSquareBinding
 
-class SquareAdapter(data: ArrayList<SquareItemViewModel>) :
+class SquareAdapter(data: MutableList<SquareItemViewModel>) :
     UniversalBindingAdapter<SquareItemViewModel, ItemSquareBinding>(data) {
     override fun getLayoutId(): Int {
         return R.layout.item_square

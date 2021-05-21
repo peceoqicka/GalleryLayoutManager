@@ -16,16 +16,50 @@ import android.view.ViewGroup
  *      version :   1.0
  * </pre>
  */
-abstract class UniversalBindingAdapter<Data, in Binding>(var dataList: ArrayList<Data>) : RecyclerView.Adapter<UniversalBindingAdapter.BindingViewHolder>() where Binding : ViewDataBinding {
+abstract class UniversalBindingAdapter<Data, in Binding>(var dataList: MutableList<Data>) :
+    RecyclerView.Adapter<UniversalBindingAdapter.BindingViewHolder>() where Binding : ViewDataBinding {
     var simpleOnItemClick: ((Data) -> Unit)? = null
     var animOnItemClick: ((View, Data) -> Unit)? = null
 
     protected abstract fun getLayoutId(): Int
     protected abstract fun onSetData(binding: Binding, data: Data)
 
+    fun addData(data: Data) {
+        val insertPosition = dataList.size
+        dataList.add(data)
+        notifyItemInserted(insertPosition)
+    }
+
+    fun addData(position: Int, data: Data) {
+        if (position in dataList.indices) {
+            dataList.add(position, data)
+            notifyItemInserted(position)
+        } else {
+            dataList.add(dataList.size, data)
+            notifyItemInserted(dataList.size)
+        }
+    }
+
+    fun removeData(data: Data) {
+        val dataPosition = dataList.indexOf(data)
+        if (dataPosition in dataList.indices) {
+            dataList.remove(data)
+            notifyItemRemoved(dataPosition)
+        }
+    }
+
+    fun removeDataAt(position: Int) {
+        if (position in dataList.indices) {
+            dataList.removeAt(position)
+            notifyItemRemoved(position)
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder {
-        val binding = DataBindingUtil.inflate<Binding>(LayoutInflater.from(parent.context),
-                getLayoutId(), parent, false)
+        val binding = DataBindingUtil.inflate<Binding>(
+            LayoutInflater.from(parent.context),
+            getLayoutId(), parent, false
+        )
         return BindingViewHolder(binding.root)
     }
 
