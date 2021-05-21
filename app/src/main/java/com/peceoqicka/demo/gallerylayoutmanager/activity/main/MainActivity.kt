@@ -6,29 +6,26 @@ import android.databinding.Bindable
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.Menu
-import android.view.MenuItem
+import android.view.View
 import com.android.databinding.library.baseAdapters.BR
-import com.google.gson.Gson
 import com.peceoqicka.demo.gallerylayoutmanager.R
-import com.peceoqicka.demo.gallerylayoutmanager.activity.center.CenterScaleActivity
-import com.peceoqicka.demo.gallerylayoutmanager.activity.first.FirstScaleActivity
-import com.peceoqicka.demo.gallerylayoutmanager.data.NewsModel
 import com.peceoqicka.demo.gallerylayoutmanager.databinding.ActivityMainBinding
+import com.peceoqicka.demo.gallerylayoutmanager.util.appMoshi
+import com.peceoqicka.demo.gallerylayoutmanager.util.readTextFromAssets
 import com.peceoqicka.gallerylayoutmanager.GalleryLayoutManager
+import com.peceoqicka.gallerylayoutmanager.OnScrollListener
+import com.peceoqicka.gallerylayoutmanager.SimpleViewTransformListener
+import com.squareup.moshi.Types
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import org.jetbrains.anko.startActivity
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.nio.charset.Charset
 
 class MainActivity : AppCompatActivity() {
     private lateinit var bindModel: ViewModel
-    private lateinit var dataList: ArrayList<SquareItemViewModel>
     private lateinit var binding: ActivityMainBinding
+    private lateinit var mSupplyList: MutableList<SquareItemViewModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,30 +35,17 @@ class MainActivity : AppCompatActivity() {
         )
         binding.model = ViewModel().apply {
             handler = eventHandler
-            layoutManager = GalleryLayoutManager.Builder()
-                .setDefaultSnapHelper()
-                .setTransformPosition(GalleryLayoutManager.POSITION_CENTER)
-                .setExtraMargin(80)
-                .setCenterScale(1.2f, 1.2f)
-                .setOnScrollListener(object : GalleryLayoutManager.OnScrollListener {
+            layoutManager = GalleryLayoutManager.create {
+                itemSpace = 60
+                viewTransformListener = SimpleViewTransformListener(1.2f, 1.2f)
+                onScrollListener = object : OnScrollListener {
                     override fun onIdle(snapViewPosition: Int) {
                         bindModel.selection = snapViewPosition
                     }
-
-                    override fun onScrolling(
-                        scrollingPercentage: Float,
-                        fromPosition: Int,
-                        toPosition: Int
-                    ) {
-                    }
-
-                    override fun onDragging() {
-                    }
-
-                    override fun onSettling() {
-                    }
-                })
-                .build()
+                }
+            }
+            numberLayoutManager =
+                LinearLayoutManager(this@MainActivity, RecyclerView.HORIZONTAL, false)
 
             bindModel = this
         }
@@ -72,104 +56,100 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("CheckResult")
     private fun loadData1() {
         Observable.create<String> {
-            val inputStream = assets.open("source.json")
-            val inputStreamReader = InputStreamReader(inputStream, Charset.forName("UTF-8"))
-            val bufferedReader = BufferedReader(inputStreamReader)
-            val text = bufferedReader.readText()
-            bufferedReader.close()
-            inputStreamReader.close()
-            inputStream.close()
-            it.onNext(text)
+            it.onNext(readTextFromAssets("source.json"))
         }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                val m = Gson().fromJson(it, NewsModel::class.java)
-                dataList = m.toItemViewModel()
-                bindModel.adapter = SquareAdapter(dataList)
+                val list = appMoshi.adapter<MutableList<SquareItemViewModel>>(
+                    Types.newParameterizedType(
+                        MutableList::class.java,
+                        SquareItemViewModel::class.java
+                    )
+                ).fromJson(it)
+                list?.let { dataList ->
+                    if (dataList.isNotEmpty()) {
+                        val numberList = arrayListOf<NumberAdapter.ItemViewModel>()
+                        dataList.mapIndexedTo(numberList, { index, _ ->
+                            NumberAdapter.ItemViewModel().apply {
+                                number = index
+                            }
+                        })
+                        bindModel.numberAdapter = NumberAdapter(numberList).apply {
+                            simpleOnItemClick = { m ->
+                                bindModel.targetDataPosition = m.number
+                            }
+                        }
+                        bindModel.adapter = SquareAdapter(dataList)
+                    }
+                }
             }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_center_scale -> {
-                startActivity<CenterScaleActivity>()
+        Observable.create<String> {
+            it.onNext(readTextFromAssets("source2.json"))
+        }.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                val list = appMoshi.adapter<MutableList<SquareItemViewModel>>(
+                    Types.newParameterizedType(
+                        MutableList::class.java,
+                        SquareItemViewModel::class.java
+                    )
+                ).fromJson(it)
+                list?.let { dataList ->
+                    mSupplyList = dataList
+                }
             }
-            R.id.action_first_scale -> {
-                startActivity<FirstScaleActivity>()
-            }
-            R.id.action_custom_scale -> {
-                //自定义缩放
-                startActivity<FirstScaleActivity>(FirstScaleActivity.EXTRA_TYPE to 1)
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private val eventHandler: ViewModel.EventHandler = object : ViewModel.EventHandler {
-        override fun onInsert() {
-            if (bindModel.targetDataPosition in (0..dataList.size)) {
-                val rndDataPosition = (Math.random() * dataList.size).toInt()
-                val insertData = dataList[rndDataPosition]
-                val dataCopy = SquareItemViewModel().apply {
-                    this.imageUrl = insertData.imageUrl
-                    this.title = insertData.title
+        override fun onItemClick(v: View, model: ViewModel) {
+            when (v.id) {
+                R.id.btn_main_insert_item -> {
+                    if (this@MainActivity::mSupplyList.isInitialized) {
+                        if (bindModel.targetDataPosition in (0..mSupplyList.size)) {
+                            val rndDataPosition = (Math.random() * mSupplyList.size).toInt()
+                            val insertData = mSupplyList[rndDataPosition]
+                            val dataCopy = SquareItemViewModel().apply {
+                                this.imageUrl = insertData.imageUrl
+                                this.title = insertData.title
+                            }
+                            bindModel.adapter?.addData(bindModel.targetDataPosition, dataCopy)
+                            bindModel.numberAdapter?.addNumber()
+                        }
+                    }
                 }
-                dataList.add(bindModel.targetDataPosition, dataCopy)
-                bindModel.adapter?.notifyItemInserted(bindModel.targetDataPosition)
+                R.id.btn_main_delete_item -> {
+                    if (this@MainActivity::mSupplyList.isInitialized) {
+                        bindModel.adapter?.removeDataAt(bindModel.targetDataPosition)
+                        bindModel.numberAdapter?.removeNumber()
+                    }
+                }
+                R.id.btn_main_scroll_to_item -> {
+                    binding.rvMainList.scrollToPosition(bindModel.targetDataPosition)
+                }
+                R.id.btn_main_smooth_scroll_to_item -> {
+                    binding.rvMainList.smoothScrollToPosition(bindModel.targetDataPosition)
+                }
             }
-        }
-
-        override fun onDelete() {
-            if (bindModel.targetDataPosition in (0 until dataList.size)) {
-                dataList.removeAt(bindModel.targetDataPosition)
-                bindModel.adapter?.notifyItemRemoved(bindModel.targetDataPosition)
-            }
-        }
-
-        override fun onFirstItem() {
-            bindModel.targetDataPosition = 0
-        }
-
-        override fun onSecondItem() {
-            bindModel.targetDataPosition = 1
-        }
-
-        override fun onLastItem() {
-            bindModel.targetDataPosition = dataList.size - 1
-        }
-
-        override fun onMiddleItem() {
-            if (dataList.size % 2 == 1) {
-                bindModel.targetDataPosition = (dataList.size - 1) / 2
-            } else {
-                bindModel.targetDataPosition = dataList.size / 2 - 1
-            }
-        }
-
-        override fun onScrollToItem() {
-            binding.rvMainList.scrollToPosition(bindModel.targetDataPosition)
-        }
-
-        override fun onSmoothScrollToItem() {
-            binding.rvMainList.smoothScrollToPosition(bindModel.targetDataPosition)
         }
     }
 
     class ViewModel : BaseObservable() {
         lateinit var handler: EventHandler
         lateinit var layoutManager: RecyclerView.LayoutManager
+        lateinit var numberLayoutManager: RecyclerView.LayoutManager
 
+        @get:Bindable
         var adapter: SquareAdapter? = null
-            @Bindable
-            get
             set(value) {
                 field = value;notifyPropertyChanged(BR.adapter)
             }
+
+        @get:Bindable
+        var numberAdapter: NumberAdapter? = null
+            set(value) {
+                field = value;notifyPropertyChanged(BR.numberAdapter)
+            }
+
         var selection: Int = 0
             @Bindable
             get
@@ -184,14 +164,9 @@ class MainActivity : AppCompatActivity() {
             }
 
         interface EventHandler {
-            fun onInsert()
-            fun onDelete()
-            fun onFirstItem()
-            fun onSecondItem()
-            fun onLastItem()
-            fun onMiddleItem()
-            fun onScrollToItem()
-            fun onSmoothScrollToItem()
+            fun onItemClick(v: View, model: ViewModel) {
+
+            }
         }
     }
 }

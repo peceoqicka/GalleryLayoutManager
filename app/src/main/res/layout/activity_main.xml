@@ -17,11 +17,11 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_main_list"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/px_640"
-            android:background="#d9d9d9"
             adapter="@{model.adapter}"
             layoutManager="@{model.layoutManager}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="#d9d9d9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -46,83 +46,86 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_main_selection" />
 
-        <Button
-            android:id="@+id/btn_main_first_item"
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_number_list"
+            adapter="@{model.numberAdapter}"
+            layoutManager="@{model.numberLayoutManager}"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px_20"
-            android:onClick="@{()->model.handler.onFirstItem()}"
-            android:text="@string/first_item"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_main_target_operation_position"
             app:layout_constraintTop_toBottomOf="@+id/tv_main_target_operation_position" />
 
-        <Button
-            android:id="@+id/btn_main_last_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/px_20"
-            android:onClick="@{()->model.handler.onLastItem()}"
-            android:text="@string/last_item"
-            app:layout_constraintStart_toEndOf="@+id/btn_main_first_item"
-            app:layout_constraintTop_toTopOf="@+id/btn_main_first_item" />
+        <View
+            android:id="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_number_list" />
 
-        <Button
-            android:id="@+id/btn_main_middle_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/px_20"
-            android:onClick="@{()->model.handler.onMiddleItem()}"
-            android:text="@string/middle_item"
-            app:layout_constraintStart_toEndOf="@+id/btn_main_last_item"
-            app:layout_constraintTop_toTopOf="@+id/btn_main_first_item" />
-
-        <Button
-            android:id="@+id/btn_main_second_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px_20"
-            android:onClick="@{()->model.handler.onSecondItem()}"
-            android:text="@string/second_item"
-            app:layout_constraintStart_toStartOf="@+id/btn_main_first_item"
-            app:layout_constraintTop_toBottomOf="@+id/btn_main_first_item" />
-
-        <Button
+        <android.support.design.button.MaterialButton
             android:id="@+id/btn_main_insert_item"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px_20"
-            android:onClick="@{()->model.handler.onInsert()}"
+            android:layout_marginTop="5dp"
+            android:onClick="@{(v)->model.handler.onItemClick(v, model)}"
             android:text="@string/insert_item"
-            app:layout_constraintStart_toStartOf="@+id/btn_main_second_item"
-            app:layout_constraintTop_toBottomOf="@+id/btn_main_second_item" />
+            android:theme="@style/Theme.MaterialComponents.Light"
+            app:layout_constraintEnd_toStartOf="@+id/btn_main_delete_item"
+            app:layout_constraintStart_toStartOf="@+id/rv_number_list"
+            app:layout_constraintTop_toBottomOf="@+id/divider" />
 
-        <Button
+        <android.support.design.button.MaterialButton
             android:id="@+id/btn_main_delete_item"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/px_20"
-            android:onClick="@{()->model.handler.onDelete()}"
+            android:layout_marginEnd="10dp"
+            android:onClick="@{(v)->model.handler.onItemClick(v, model)}"
             android:text="@string/delete_item"
+            android:theme="@style/Theme.MaterialComponents.Light"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btn_main_insert_item"
             app:layout_constraintTop_toTopOf="@+id/btn_main_insert_item" />
 
-        <Button
-            android:id="@+id/btn_main_scroll_to_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px_20"
-            android:onClick="@{()->model.handler.onScrollToItem()}"
-            android:text="@string/scroll_to_item"
-            app:layout_constraintStart_toStartOf="@+id/btn_main_insert_item"
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_main_insert_item" />
 
-        <Button
+        <android.support.design.button.MaterialButton
+            android:id="@+id/btn_main_scroll_to_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:onClick="@{(v)->model.handler.onItemClick(v, model)}"
+            android:text="@string/scroll_to_item"
+            android:theme="@style/Theme.MaterialComponents.Light"
+            app:layout_constraintEnd_toStartOf="@+id/btn_main_smooth_scroll_to_item"
+            app:layout_constraintHorizontal_weight="2"
+            app:layout_constraintStart_toStartOf="@+id/btn_main_insert_item"
+            app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+        <android.support.design.button.MaterialButton
             android:id="@+id/btn_main_smooth_scroll_to_item"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/px_20"
-            android:onClick="@{()->model.handler.onSmoothScrollToItem()}"
+            android:onClick="@{(v)->model.handler.onItemClick(v, model)}"
             android:text="@string/smooth_scroll_to_item"
+            android:theme="@style/Theme.MaterialComponents.Light"
+            app:layout_constraintEnd_toEndOf="@+id/btn_main_delete_item"
+            app:layout_constraintHorizontal_weight="3"
             app:layout_constraintStart_toEndOf="@+id/btn_main_scroll_to_item"
             app:layout_constraintTop_toTopOf="@+id/btn_main_scroll_to_item" />
 

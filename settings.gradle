@@ -1,4 +1,2 @@
-include ':app', ':gallerylayoutmanager'
+include ':app', ':library'
 rootProject.name='GalleryLayoutManager'
-include ':appx'
-include ':gallerylayoutmanagerx'
